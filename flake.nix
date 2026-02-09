@@ -24,7 +24,7 @@
             });
           })
         ];
-        config = { };
+        packages.default = inputs.args.pkgskgs.st;
       };
     };
   };
