@@ -25,5 +25,22 @@
       };
     in {
       packages.default = pkgs.st;
+      devShells.system.default = pkgs.mkShell {
+        packages = with pkgs; [
+          pkg-config
+          libX11
+          libXft
+          fontconfig
+          freetype
+          harfbuzz
+          gcc
+          gnumake
+        ];
+
+        shellHook = ''
+          exec gcc --version
+          exec zsh
+        '';
+      };
     });
 }
