@@ -3,29 +3,27 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { flake-parts, ... } @ inputs: flake-parts.lib.mkFlake { inherit inputs; } {
-    systems = [
-      "x86_64-linux"
-    ];
-    perSystem = { system, ...}: {
-      _module.args.pkgs = import inputs.nixpgs {
+  outputs = { nixpkgs, utils, ... }:
+    utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
         inherit system;
+
         overlays = [
           (final: prev: {
             st = prev.st.overrideAttrs (old: {
               src = ./.;
               buildInputs = with prev; old.buildInputs ++ [
-                harfbuzz
+                harfbuzz 
                 nerd-fonts.jetbrains-mono
               ];
             });
           })
         ];
-        packages.default = inputs.args.pkgs.st;
       };
-    };
-  };
+    in {
+      packages.default = pkgs.st;
+    });
 }
