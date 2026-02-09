@@ -30,6 +30,7 @@
           pkg-config
           libX11
           libXft
+          libxrender
           fontconfig
           freetype
           harfbuzz
