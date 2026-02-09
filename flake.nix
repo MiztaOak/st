@@ -25,7 +25,7 @@
       };
     in {
       packages.default = pkgs.st;
-      devShells.system.default = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         packages = with pkgs; [
           pkg-config
           libX11
@@ -38,7 +38,6 @@
         ];
 
         shellHook = ''
-          exec gcc --version
           exec zsh
         '';
       };
